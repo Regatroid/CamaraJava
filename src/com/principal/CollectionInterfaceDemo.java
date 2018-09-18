@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Predicate;
 
 import com.principal.Persona.Sexo;
 
@@ -120,18 +121,18 @@ public class CollectionInterfaceDemo {
 		Iterator<Persona> it;
 		it = personas.iterator();
 
-		while (it.hasNext()) {
-			// por ejemplo eliminar los de el sexo masculino
-			if (it.next().getSexo().equals(Persona.Sexo.HOMBRE)) {
-				it.remove();
-			}
-			// imprimir la lista resultante que solo obtendra personas del sexo mujer
-			System.out.println("Listado de personas resultante ");
-			System.out.println(personas);
-
-			// actividad
-
-		}
+//		while (it.hasNext()) {
+//			// por ejemplo eliminar los de el sexo masculino
+//			if (it.next().getSexo().equals(Persona.Sexo.HOMBRE)) {
+//				it.remove();
+//			}
+//			// imprimir la lista resultante que solo obtendra personas del sexo mujer
+//			System.out.println("Listado de personas resultante ");
+//			System.out.println(personas);
+//
+//			// actividad
+//
+//		}
 		Iterator<Persona> mujer;
 
 		mujer = personas.iterator();
@@ -149,5 +150,35 @@ public class CollectionInterfaceDemo {
 		}
 		double salarioPromedio = salario / num;
 		System.out.println(salarioPromedio);
+		
+		
+		
+		/*
+		 * Tercero. Via o metodo preferido de recorrer una colección es el primero que aperece en
+		 * la documentacion es decir utilizando operaciones de agregado metodos de la clase Stream y expresiones lambda
+		Solucionar el ejercicio 2 por esta via
+		 * */
+//		Predicate<Persona> sexoPersona = new Predicate<Persona>() {
+//
+//			@Override
+//			public boolean test(Persona p) {
+//				return (p.getSexo().equals(Persona.Sexo.MUJER));
+//			}
+//		};
+		
+		//personas.parallelStream() esto usaria todos los nucleos del procesador.
+		personas.stream().filter(new Predicate<Persona>() {
+
+			@Override
+			public boolean test(Persona p) {
+				// TODO Auto-generated method stub
+				return (p.getSexo().equals(Persona.Sexo.MUJER));
+			}
+		}) .map(Persona::getSalario); 
+		
 	}
+
+	
+
+
 }
