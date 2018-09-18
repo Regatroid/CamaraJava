@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import com.principal.Persona.Sexo;
@@ -59,28 +60,67 @@ public class CollectionInterfaceDemo {
 
 		personas.add(new Persona("Tomas", "apelli1", "apelli2", LocalDate.of(2007, Month.MARCH, 03), Sexo.HOMBRE));
 
+		/*
+		 * Variante 3, la clase persona ya contenga un conjunto de personas que no
+		 * necesita crear personas, crear un elemento estatico en la clase persona que
+		 * devuelva un listado de personas, para que de una forma rapida tener
+		 * disponible unas cuantas personas para trabajar
+		 */
+
+		// metodo devuelve un listado de personas
+
+			personas.add(new Persona("Tomas", "apelli1", "apelli2", LocalDate.of(2007, Month.MARCH, 03), Sexo.HOMBRE));
+			personas.add(new Persona("Luisa", "Ey", "Holi", LocalDate.of(2000, Month.AUGUST, 07), Sexo.MUJER));
+			personas.add(new Persona("Felipe", "Hola", "Felipe", LocalDate.of(2001, Month.DECEMBER, 12), Sexo.HOMBRE));
+
+			personas = Persona.getPersonas();
+
+		/*
+		 * Recorrer una coleccion (), usaremos 3 formas pero la unica que permite
+		 * eliminar elementos de la coleccion mientras se recorre es usando iteradores
+		 */
+
+		// Primero, bucle foreach
+
+		// recorrer la coleccion de argumentos y recorrer la coleccion de personas
+		for (String s : nombres) {
+			System.out.println(s);
+		}
+		System.out.println("LISTADO DE ARGUMENTOS QUE SE PASAN " + "COMO PARAMENTROS AL METODO MAIN");
+
+		// recorrer la coleccion de argumentos
+		for (String argumento : argumentos) {
+			System.out.println(argumento);
+		}
+		// recorrer la coleccion personas
+		for (Persona p : personas) {
+			System.out.println(p);
+		}
+
+		// si queremos imprimir el objeto completo hay que sobrescribir el metodo
+		// toString()
+		// si queremos mostrar solo partes del objeto persona como nombre, apellidos...
+		// ejemplo: mostrar de cada persona el nombre y sus apellidos concatenados
+		for (Persona p : personas) {
+			System.out.println(p.getNombre() + " " + p.getPrimerApellido() + " " + p.getSegundoApellido());
+		}
+
+		// SEGUNDO utilizando un iterador
+		// es la unica forma de eliminar un elemento de la coleccion a medida que la
+		// recorremos
+
+		// recorrer la coleccion de personas
+		Iterator<Persona> it;
+		it = personas.iterator();
+
+		while (it.hasNext()) {
+			// por ejemplo eliminar los de el sexo masculino
+			if (it.next().getSexo().equals(Persona.Sexo.HOMBRE)) {
+				it.remove();
+			}
+			// imprimir la lista resultante que solo obtendra personas del sexo mujer
+			System.out.println("Listado de personas resultante ");
+			System.out.println(personas);
+		}
 	}
-	/*
-	 * Variante 3, la clase persona ya contenga un conjunto de personas que no
-	 * necesita crear personas, crear un elemento estatico en la clase persona que
-	 * devuelva un listado de personas, para que de una forma rapida tener
-	 * disponible unas cuantas personas para trabajar
-	 */
-
-	// metodo devuelve un listado de personas
-
-	public static List<Persona> getPersonas() {
-		List<Persona> personas = null;
-		personas = new ArrayList<>();
-
-		personas.add(new Persona("Tomas", "apelli1", "apelli2", LocalDate.of(2007, Month.MARCH, 03), Sexo.HOMBRE));
-		personas.add(new Persona("Luisa", "Ey", "Holi", LocalDate.of(2000, Month.AUGUST, 07), Sexo.MUJER));
-		personas.add(new Persona("Felipe", "Hola", "Felipe", LocalDate.of(2001, Month.DECEMBER, 12), Sexo.HOMBRE));
-
-		personas = Persona.getPersonas();
-
-		return personas;
-
-	}
-
 }

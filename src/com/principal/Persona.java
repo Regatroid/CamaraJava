@@ -1,7 +1,11 @@
 package com.principal;
 
 import java.time.LocalDate;
+import java.time.Month;
+import java.util.ArrayList;
 import java.util.List;
+
+import com.principal.Persona.Sexo;
 
 public class Persona {
 
@@ -64,9 +68,21 @@ public class Persona {
 		this.sexo = sexo;
 	}
 
-	public static List<Persona> getPersonas() {
-		// TODO Auto-generated method stub
-		return null;
+	@Override
+	public String toString() {
+		return "Persona [nombre=" + nombre + ", primerApellido=" + primerApellido + ", segundoApellido="
+				+ segundoApellido + ", fechaNacimiento=" + fechaNacimiento + ", sexo=" + sexo + "]";
 	}
 
+	public static List<Persona> getPersonas() {
+		List<Persona> personas;
+		
+		personas = new ArrayList<>();
+
+		personas.add(new Persona("Tomas", "apelli1", "apelli2", LocalDate.of(2007, Month.MARCH, 03), Sexo.HOMBRE));
+		personas.add(new Persona("Luisa", "Ey", "Holi", LocalDate.of(2000, Month.AUGUST, 07), Sexo.MUJER));
+		personas.add(new Persona("Felipe", "Hola", "Felipe", LocalDate.of(2001, Month.DECEMBER, 12), Sexo.HOMBRE));
+
+		return personas;
+	}
 }
