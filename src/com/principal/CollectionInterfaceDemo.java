@@ -46,9 +46,12 @@ public class CollectionInterfaceDemo {
 		Persona persona2;
 		Persona persona3;
 
-		persona1 = new Persona("Juan", "ape1", "ape2", LocalDate.of(1991, Month.MARCH, 17), Sexo.HOMBRE);
-		persona2 = new Persona("Ainoa", "sanchez-Fortun", "Asensio", LocalDate.of(2000, Month.APRIL, 13), Sexo.MUJER);
-		persona3 = new Persona("Adreu", "Buenafuente", "Torres", LocalDate.of(1983, Month.FEBRUARY, 17), Sexo.MUJER);
+		persona1 = new Persona("Juan", "ape1", "ape2", LocalDate.of(1991, Month.MARCH, 17), Sexo.HOMBRE, 2500.00,
+				Persona.Ciudad.AGUILAS);
+		persona2 = new Persona("Ainoa", "sanchez-Fortun", "Asensio", LocalDate.of(2000, Month.APRIL, 13), Sexo.MUJER,
+				2500.00, Persona.Ciudad.AGUILAS);
+		persona3 = new Persona("Adreu", "Buenafuente", "Torres", LocalDate.of(1983, Month.FEBRUARY, 17), Sexo.MUJER,
+				2500.00, Persona.Ciudad.AGUILAS);
 
 		personas.add(persona1);
 		personas.add(persona2);
@@ -58,7 +61,8 @@ public class CollectionInterfaceDemo {
 		 * Variante 2, no crear objetyos personas previamente
 		 */
 
-		personas.add(new Persona("Tomas", "apelli1", "apelli2", LocalDate.of(2007, Month.MARCH, 03), Sexo.HOMBRE));
+		personas.add(new Persona("Tomas", "apelli1", "apelli2", LocalDate.of(2007, Month.MARCH, 03), Sexo.HOMBRE,
+				2500.00, Persona.Ciudad.AGUILAS));
 
 		/*
 		 * Variante 3, la clase persona ya contenga un conjunto de personas que no
@@ -69,11 +73,14 @@ public class CollectionInterfaceDemo {
 
 		// metodo devuelve un listado de personas
 
-			personas.add(new Persona("Tomas", "apelli1", "apelli2", LocalDate.of(2007, Month.MARCH, 03), Sexo.HOMBRE));
-			personas.add(new Persona("Luisa", "Ey", "Holi", LocalDate.of(2000, Month.AUGUST, 07), Sexo.MUJER));
-			personas.add(new Persona("Felipe", "Hola", "Felipe", LocalDate.of(2001, Month.DECEMBER, 12), Sexo.HOMBRE));
+		personas.add(new Persona("Tomas", "apelli1", "apelli2", LocalDate.of(2007, Month.MARCH, 03), Sexo.HOMBRE,
+				2500.00, Persona.Ciudad.AGUILAS));
+		personas.add(new Persona("Luisa", "Ey", "Holi", LocalDate.of(2000, Month.AUGUST, 07), Sexo.MUJER, 2500.00,
+				Persona.Ciudad.AGUILAS));
+		personas.add(new Persona("Felipe", "Hola", "Felipe", LocalDate.of(2001, Month.DECEMBER, 12), Sexo.HOMBRE,
+				2500.00, Persona.Ciudad.AGUILAS));
 
-			personas = Persona.getPersonas();
+		personas = Persona.getPersonas();
 
 		/*
 		 * Recorrer una coleccion (), usaremos 3 formas pero la unica que permite
@@ -121,6 +128,26 @@ public class CollectionInterfaceDemo {
 			// imprimir la lista resultante que solo obtendra personas del sexo mujer
 			System.out.println("Listado de personas resultante ");
 			System.out.println(personas);
+
+			// actividad
+
 		}
+		Iterator<Persona> mujer;
+
+		mujer = personas.iterator();
+		int num = 0;
+		Double salario = 0.00;
+
+		while (mujer.hasNext()) {
+			Persona pp = mujer.next();
+			if (pp.getSexo().equals(Persona.Sexo.MUJER)) {
+
+				salario += pp.getSalario();
+				num++;
+			}
+
+		}
+		double salarioPromedio = salario / num;
+		System.out.println(salarioPromedio);
 	}
 }
