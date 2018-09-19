@@ -167,14 +167,15 @@ public class CollectionInterfaceDemo {
 //		};
 		
 		//personas.parallelStream() esto usaria todos los nucleos del procesador.
-		personas.stream().filter(new Predicate<Persona>() {
+		double salarioPromedioMujeres = personas.stream().filter(new Predicate<Persona>() {
 
 			@Override
 			public boolean test(Persona p) {
 				// TODO Auto-generated method stub
 				return (p.getSexo().equals(Persona.Sexo.MUJER));
 			}
-		}) .map(Persona::getSalario); 
+			//:: pasa un metodo por referencia
+		}) .mapToDouble(Persona::getSalario).average().getAsDouble(); 
 		
 	}
 
