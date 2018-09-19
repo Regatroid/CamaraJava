@@ -158,25 +158,87 @@ public class CollectionInterfaceDemo {
 		 * la documentacion es decir utilizando operaciones de agregado metodos de la clase Stream y expresiones lambda
 		Solucionar el ejercicio 2 por esta via
 		 * */
-//		Predicate<Persona> sexoPersona = new Predicate<Persona>() {
+		Double salarioPromedioMujeres;
+		/*
+		 * 
+		sintaxis coleccion.stream.tuberia (como filter), filter tiene que implementar la interfaz predicate
+		para eso es necesario una clase, si esta funcionalidad solo se va a usar 1 vez se puede usar una clase anidada
+		CLASE ANONINA (que no tiene la palabra reserva class), que se declara y se instancia en el mismo sitio
+		la clase anonima implementa la funcionalidad, la creamos
+		 de tipo predicate e implementa Persona. 
+		compruebaSexo es un objeto que se crea de la clase anonina y se instancia en el mismo sitio que se declara
+		 al usar predicate se implementa como minimo siempre el metodo test, que recibe algo (una persona en este caso)
+		 comprueba en el cuerpo lo que sea necesario y devuelve true o false
+		 */
+		
+		
+		//todo esto se puede mejorar metiendolo en el filtro sin crear el objeto
+//		Predicate<Persona> compruebaSexo = new Predicate<Persona>() {
 //
 //			@Override
-//			public boolean test(Persona p) {
-//				return (p.getSexo().equals(Persona.Sexo.MUJER));
+//			public boolean test(Persona t) {
+//				// TODO Auto-generated method stub
+//				//en este caso se le pasa persona y comprueba si es mujer en el return y devuelve true
+//				return (t.getSexo().equals(Persona.Sexo.MUJER));
 //			}
+//			
 //		};
+		//termina ; porque es una expresion de clase
 		
-		//personas.parallelStream() esto usaria todos los nucleos del procesador.
-		double salarioPromedioMujeres = personas.stream().filter(new Predicate<Persona>() {
-
-			@Override
-			public boolean test(Persona p) {
-				// TODO Auto-generated method stub
-				return (p.getSexo().equals(Persona.Sexo.MUJER));
-			}
-			//:: pasa un metodo por referencia
-		}) .mapToDouble(Persona::getSalario).average().getAsDouble(); 
+		//en la ayuda cuando sale Predicate <? super Persona>, el ? es un comodin, cualquier tipo de dato, pero el super Persona, 
+		//quiere decir que puede trabajar con cualquier dato pero que sea del elemento persona. Es una restricción de tipo generico
 		
+		
+//		personas.stream()
+//			.filter(compruebaSexo)
+		//lo haremos sin crear el objeto y usando solo filter
+		
+//		personas.stream()
+//			.filter(new Predicate<Persona>() {
+//
+//				@Override
+//				public boolean test(Persona t) {
+//					// TODO Auto-generated method stub
+//					return (t.getSexo().equals(Persona.Sexo.MUJER));
+//				}
+//				
+//			});
+		
+		/* hay una forma de reducir aun mas el codigo usando expresiones lambda en lugar de una clase anonina, para
+		 * implementar el unico metodo abstracto de la interfaz funcional Predicate */
+		
+		//Ejemplo lambda, tenemos un metodo increment que devuelve un Integer
+		
+//		Integer Increment(Integer x)
+//		{
+//			return x++;
+//		}
+//		//en expresion lambda quedaria, que al ser una sola instruccion no necesita ; 
+//		
+//		(Integer x) -> {return x++}
+//		
+//		//se podria mejorar mas, si se recorre una coleccion de enteros el tipo de dato no es necesario, y si es un solo parametro 
+//		//no necesita parantesis, ademas, al ser una sola instruccion (cuerpo) no hace falta las llaves { de apertura de cierre, 
+//		// ademas el return no es necesario
+//		
+//		x ->  x++
+		
+		/*mejoramos la funcionalidad con expresiones lambda */
+		
+		salarioPromedioMujeres = personas.stream().filter(p -> p.getSexo().equals(Persona.Sexo.MUJER))
+			//con eso obtenemos las mujeres y ahora cogemos el salario
+			//.mapToDouble(p -> p.getSalario())
+			//en aquellos casos donde la expresion lambda solamente invoque al metodo que implementa la funcionalidad
+			//es mas claro y eficiente pasar el metodo por referencia, como en el caso de mapToDouble(p -> p.getSalario()) 
+			.mapToDouble(Persona::getSalario) //sin parentesis porque no se invoca el metodo, sino su direcion	
+			//la operacion final, el salario promedio, usamos average, no asegura que devuelva un double, para que lo devuelva usamos
+			//getAsDouble
+			.average().getAsDouble()
+			;
+		//y esto devuelve un booleano , porque filter implementa la interfaz predicated
+		
+		//equals compara dos cosas, da o verdadero o falso, pero a nivel interno usa el metodo test que develve un booleano.
+		//el equals es porque le tienes que decir que compare
 	}
 
 	
