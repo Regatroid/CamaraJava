@@ -235,6 +235,7 @@ public class CollectionInterfaceDemo {
 			//getAsDouble
 			.average().getAsDouble()
 			;
+		System.out.println(salarioPromedio);
 		//y esto devuelve un booleano , porque filter implementa la interfaz predicated
 		
 		//equals compara dos cosas, da o verdadero o falso, pero a nivel interno usa el metodo test que develve un booleano.
